@@ -23,7 +23,6 @@ class TweetListener(tweepy.StreamListener):
             self.api.update_status("@{} {}".format(status.user.id_str, SCRIPTED_MSG))
 
 
-
 def get_bot():
     with open("json/bot.json", "r") as auth:
         bot_data = json.load(auth)
