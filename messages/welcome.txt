@@ -1,0 +1,4 @@
+Choose an Option Below:
+1. Use the default bot
+2. Add a newly created bot(requires you to create a new Twitter account)
+3. Use a bot you have already created

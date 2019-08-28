@@ -1,0 +1,4 @@
+You have chosen to add a new bot:
+Please enter the bot's authentication details in the following format:
+
+Handle, Consumer Key, Consumer Secret, Access Token, Access Token Secret
