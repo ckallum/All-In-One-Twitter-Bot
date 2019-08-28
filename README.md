@@ -1,2 +1,3 @@
-# Twitter-Bot-using-Tweepy
-A twitter bot that automatically replies to and retweets tweets sent by subscribed users using the Tweepy API
+# Twitter-Bots-using-Tweepy
+Twitter Bots that can automatically reply/retweet/like/follow selected users and their tweets using the 
+Twitter Python API Tweepy.
