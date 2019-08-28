@@ -9,6 +9,10 @@ with open("messages/welcome.txt", "r") as welcome:
 with open("messages/createbot.txt", "r") as create:
     CREATE_BOT_TEXT = create.read() + "\n"
 
+with open("messages/createbot.txt", "r") as mode:
+    MODE_TEXT = mode.read() + "\n"
+
+
 
 class BotApp(object):
     def __init__(self):

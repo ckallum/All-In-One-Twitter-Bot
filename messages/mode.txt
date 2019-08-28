@@ -1,0 +1,4 @@
+Which functionality would you like your bot to use:
+1. Auto reply
+2. Auto like/retweet
+3. Auto follow
