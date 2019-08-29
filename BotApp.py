@@ -13,7 +13,6 @@ with open("messages/createbot.txt", "r") as mode:
     MODE_TEXT = mode.read() + "\n"
 
 
-
 class BotApp(object):
     def __init__(self):
         self.bot = None
@@ -33,7 +32,12 @@ class BotApp(object):
 
     def set_specified_bot(self, specified_bot=""):
         if specified_bot:
-            self.bot = self.bot_data[specified_bot]
+            try:
+                self.bot = self.bot_data[specified_bot]
+            except KeyError as e:
+                self.logger.log("Bot does not exist, try again!", e.args)
+                retry = input("Type handle")
+                self.set_specified_bot(retry)
         else:
             self.bot = self.bot_data["Default"]
 
