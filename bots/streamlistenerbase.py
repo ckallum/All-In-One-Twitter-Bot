@@ -48,7 +48,7 @@ class StreamListenerBase(tweepy.StreamListener):
 
     def choose(self):
         with open("messages/option_messages/choice.txt", "r") as option:
-            choice = input(option.read() + "\n")
+            choice = int(input(option.read() + "\n"))
         handles = input("Enter the handles of the users\n")
         if not handles:
             self.logger.info("No handles entered")
@@ -62,9 +62,12 @@ class StreamListenerBase(tweepy.StreamListener):
             self.remove_users()
             self.logger.info("Users removed, bot now running")
             self.run_bot()
-        else:
+        elif choice == 3:
             self.logger.info("Bot running")
             self.run_bot()
+        else:
+            self.logger.info("Input error, please try again")
+            self.choose()
 
     def run_bot(self):
         pass

@@ -17,4 +17,7 @@ class TweetBot(StreamListenerBase):
     def start(self):
         self.receiver = input("Which handle would you like to tweet @? \n ")
         self.message = input("Enter the message \n ")
+        while len(self.message) > 280:
+            self.logger.info("Message too long")
+            self.message = input("Enter the message \n ")
         self.create_tweet()

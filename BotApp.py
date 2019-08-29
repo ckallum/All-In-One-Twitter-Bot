@@ -69,16 +69,19 @@ class BotApp(object):
         self.api = api
 
     def get_mode_from_user(self):
-        state = input(MODE_TEXT)
+        state = int(input(MODE_TEXT))
+
         if state == 1:
-            bot = ReplyBot(self.api, self.logger)
+            return ReplyBot(self.api, self.logger)
         elif state == 2:
-            bot = LikeRetweetBot(self.api, self.logger)
+            return LikeRetweetBot(self.api, self.logger)
         elif state == 3:
-            bot = FollowBot(self.api, self.logger)
+            return FollowBot(self.api, self.logger)
+        elif state == 4:
+            return TweetBot(self.api, self.logger)
         else:
-            bot = TweetBot(self.api, self.logger)
-        return bot
+            self.logger.info("Incorrect state try again")
+            self.get_mode_from_user()
 
     def select(self, option):
         if option == 1:
@@ -87,9 +90,11 @@ class BotApp(object):
             bot_details = input("{} \n".format(CREATE_BOT_TEXT))
             bot_details = list(bot_details.strip().split(","))
             self.create_bot(bot_details[0], bot_details[1], bot_details[2], bot_details[3], bot_details[4])
-        else:
+        elif option == 3:
             bot_handle = input("What is the bots handle?\n")
             self.set_specified_bot(bot_handle)
+        else:
+            self.logger.error("Error")
         self.create_api()
 
     def run(self):
