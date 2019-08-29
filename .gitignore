@@ -106,3 +106,7 @@ venv.bak/
 
 #extras
 json/*.json
+json/bots.json
+json/autoretweet
+json/autoreply
+json/autofollow
