@@ -14,3 +14,5 @@ with open("json/bots.json", "r") as bots:
         print("OK")
     except:
         print("Authentication Error")
+
+

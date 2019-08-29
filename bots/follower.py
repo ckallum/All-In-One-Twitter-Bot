@@ -1,24 +1,47 @@
-import tweepy
-import json
-
 from bots.streamlistenerbase import StreamListenerBase
 
 
 class FollowBot(StreamListenerBase):
     def __init__(self, api, logger):
         super().__init__(api, logger)
-        self.json_file = "autoflow/users.json"
+
+    def on_error(self, status_code):
+        self.logger.info("Error detected")
 
     def follow_users(self):
         self.logger.info("Following users")
-        for user in self.users:
-            if not user["following"]:
-                self.logger.info("Following {}".format(user["handle"]))
-                user["following"] = True
-                self.api.create_friendship(user["id"])
+        for user in self.tracking:
+            if user not in self.api.followers_ids:
+                self.logger.info("Following {}".format(self.api.get_user(user)))
+                self.api.create_friendship(user)
+            else:
+                self.logger.info("Already following user {}".format(self.api.get_user(user)))
+                pass
 
     def unfollow_users(self):
-        pass
+        self.logger.info("Following users")
+        for user in self.tracking:
+            if user not in self.api.followers_ids:
+                self.logger.info("Already following user {}".format(self.api.get_user(user)))
+            else:
+                self.logger.info("Unfollowing {}".format(self.api.get_user(user)))
+                self.api.destroy_friendship(user["id"])
+                pass
+
+    def choose(self):
+        choice = input("Would you like to follow or unfollow(1/2)")
+        users = list(input("Enter the handles").strip(" "))
+        self.tracking = [self.api.get_user(user) for user in users]
+        if choice == 1:
+            self.logger.info("Users added to following list, bot now running")
+            self.follow_users()
+        elif choice == 2:
+            self.logger.info("Users added, bot now running")
+            self.unfollow_users()
 
     def start(self):
-        pass
+        self.choose()
+
+
+
+

@@ -1,4 +1,5 @@
 import tweepy
+
 from bots.streamlistenerbase import StreamListenerBase
 
 
@@ -14,10 +15,13 @@ class LikeRetweetBot(StreamListenerBase):
             self.logger.info("Re-tweeted and liked tweet from {}: {}".format(status.user.id_str, status.text))
 
     def run_bot(self):
-        while True:
-            stream = tweepy.Stream(self, self.api.auth)
-            stream.filter(track=self.users, languages=["en"])
-            self.logger.info("Searching tweets")
+        try:
+            while True:
+                stream = tweepy.Stream(self, self.api.auth)
+                stream.filter(track=["@"+user["handle"] for user in self.users], languages=["en"], is_async=True)
+                self.logger.info("Searching tweets. press CTRL-C to quit")
+        except KeyboardInterrupt:
+            self.logger.info("Exiting app")
+            pass
 
-    def start(self):
-        pass
+

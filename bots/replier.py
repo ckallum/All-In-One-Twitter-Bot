@@ -29,7 +29,11 @@ class ReplyBot(StreamListenerBase):
             self.api.update_status("@{} {}".format(status.user.id_str, SCRIPTED_MSG))
 
     def run_bot(self):
-        pass
-
-    def start(self):
-        pass
+        try:
+            while True:
+                stream = tweepy.Stream(self, self.api.auth)
+                stream.filter(track="@"+self.api.get_user(self.me.id), languages=["en"], is_async=True)
+                self.logger.info("Searching tweets. press CTRL-C to quit")
+        except KeyboardInterrupt:
+            self.logger.info("Exiting app")
+            pass
