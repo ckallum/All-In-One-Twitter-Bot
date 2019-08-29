@@ -5,7 +5,7 @@ import logging
 
 
 class FollowBot(object):
-    def __init__(self, users):
+    def __init__(self, api):
         pass
 
     def follow_users(self, users, api):
