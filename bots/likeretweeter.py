@@ -1,14 +1,11 @@
-import time
-
 import tweepy
-import json
-
 from bots.streamlistenerbase import StreamListenerBase
 
 
 class LikeRetweetBot(StreamListenerBase):
     def __init__(self, api, logger):
         super().__init__(api, logger)
+        self.json_file = "autoretweet/users.json"
 
     def on_status(self, status):
         if status.user.id_str in self.tracking:

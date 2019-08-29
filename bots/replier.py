@@ -1,6 +1,4 @@
 import tweepy
-import json
-
 from bots.streamlistenerbase import StreamListenerBase
 
 SCRIPTED_MSG = "Thanks for messaging KE-BOT, Message courtesy of KE-BOT"
@@ -9,6 +7,7 @@ SCRIPTED_MSG = "Thanks for messaging KE-BOT, Message courtesy of KE-BOT"
 class ReplyBot(StreamListenerBase):
     def __init__(self, api, logger):
         super().__init__(api, logger)
+        self.json_file = "autoreply/users.json"
 
     def on_connect(self):
         if not self.tracking:

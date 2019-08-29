@@ -1,4 +1,6 @@
 import tweepy as tweepy
+import simplejson as json
+import tweepy
 
 
 class StreamListenerBase(tweepy.StreamListener):
@@ -9,6 +11,7 @@ class StreamListenerBase(tweepy.StreamListener):
         self.me = api.me()
         self.api = api
         self.logger = logger
+        self.json_file = ""
 
     def on_connect(self):
         if not self.tracking:
