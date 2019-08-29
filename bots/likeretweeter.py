@@ -18,7 +18,6 @@ class LikeRetweetBot(StreamListenerBase):
             stream = tweepy.Stream(self, self.api.auth)
             stream.filter(track=self.users, languages=["en"])
             self.logger.info("Searching tweets")
-            time.sleep(60)
 
     def start(self):
         pass

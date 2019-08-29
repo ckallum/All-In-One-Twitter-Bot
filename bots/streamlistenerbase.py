@@ -23,7 +23,16 @@ class StreamListenerBase(tweepy.StreamListener):
         pass
 
     def add_users(self):
-        pass
+        handles = input("Enter the handles of the users")
+        if not handles:
+            self.logger.info("No handles entered")
+            self.add_users()
+        else:
+            handles = handles.strip()
+            for handle in handles:
+                user_id = self.api.lookup_users(screen_names=handle)
+                self.tracking.append(user_id)
+                self.users[handle] = {"id": user_id}
 
     def remove_users(self):
         pass
