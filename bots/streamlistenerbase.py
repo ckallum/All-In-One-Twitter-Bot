@@ -11,6 +11,7 @@ class StreamListenerBase(tweepy.StreamListener):
         self.api = api
         self.logger = logger
         self.json_file = ""
+        self.action_handles = None
 
     def on_connect(self):
         if not self.tracking:
@@ -22,31 +23,19 @@ class StreamListenerBase(tweepy.StreamListener):
         pass
 
     def add_users(self):
-        handles = input("Enter the handles of the users")
-        if not handles:
-            self.logger.info("No handles entered")
-            self.add_users()
-        else:
-            handles = list(handles.strip(" "))
-            for handle in handles:
-                user_id = self.api.lookup_users(screen_names=handle)
-                self.tracking.append(user_id)
-                self.users.append({"id": user_id, "handle": handle})
+        for handle in self.action_handles:
+            user_id = self.api.lookup_users(screen_names=handle)
+            self.tracking.append(user_id)
+            self.users.append({"id": user_id, "handle": handle})
 
     def remove_users(self):
-        handles = input("Enter the handles of the users")
-        if not handles:
-            self.logger.info("No handles entered")
-            self.remove_users()
-        else:
-            handles = list(handles.strip(" "))
-            for handle in handles:
-                if handle not in handles:
-                    self.logger.info("Invalid handle entered: {}, continuing..".format(handle))
-                    pass
-                user_id = self.api.lookup_users(screen_names=handle)
-                self.tracking.remove(user_id)
-                self.users.remove({"id": user_id, "handle": handle})
+        for handle in self.action_handles:
+            if handle not in [user["handle"] for user in self.users]:
+                self.logger.info("Invalid handle entered: {}, continuing..".format(handle))
+                pass
+            user_id = self.api.lookup_users(screen_names=handle)
+            self.tracking.remove(user_id)
+            self.users.remove({"id": user_id, "handle": handle})
 
     def update_json(self):
         with open(self.json_file, "w") as file:
@@ -59,16 +48,22 @@ class StreamListenerBase(tweepy.StreamListener):
 
     def choose(self):
         with open("messages/option_messages/choice.txt", "r") as option:
-            choice = input(option.read())
+            choice = input(option.read() + "\n")
+        handles = input("Enter the handles of the users\n")
+        if not handles:
+            self.logger.info("No handles entered")
+        else:
+            self.action_handles = list(handles.strip(" "))
         if choice == 1:
             self.add_users()
             self.logger.info("Users added, bot now running")
             self.run_bot()
         elif choice == 2:
             self.remove_users()
-            self.logger.info("Users added, bot now running")
+            self.logger.info("Users removed, bot now running")
             self.run_bot()
         else:
+            self.logger.info("Bot running")
             self.run_bot()
 
     def run_bot(self):

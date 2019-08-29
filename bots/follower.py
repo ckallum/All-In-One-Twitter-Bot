@@ -29,7 +29,7 @@ class FollowBot(StreamListenerBase):
                 pass
 
     def choose(self):
-        choice = input("Would you like to follow or unfollow(1/2)")
+        choice = input("Would you like to follow or unfollow(1/2)\n")
         users = list(input("Enter the handles").strip(" "))
         self.tracking = [self.api.get_user(user) for user in users]
         if choice == 1:

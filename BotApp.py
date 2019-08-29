@@ -23,7 +23,7 @@ class BotApp(object):
         self.api = None
         self.running = False
         self.bot_data_jsons = {}
-        logging.basicConfig(level=logging.info())
+        logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger()
 
     def upload_bot_data(self):
@@ -40,7 +40,7 @@ class BotApp(object):
                 self.bot_json = self.bot_data_jsons[specified_bot]
             except KeyError as e:
                 self.logger.log("Bot does not exist, try again!", e.args)
-                retry = input("Type handle")
+                retry = input("Type handle \n")
                 self.set_specified_bot(retry)
         else:
             self.bot_json = self.bot_data_jsons["Default"]
@@ -66,7 +66,6 @@ class BotApp(object):
             self.logger.error("Error creating API")
             raise e
         self.logger.info("API created")
-        self.logger.info("Current bot: {}".format(self.bot_json["handle"]))
         self.api = api
 
     def get_mode_from_user(self):
@@ -85,17 +84,17 @@ class BotApp(object):
         if option == 1:
             self.set_specified_bot()
         elif option == 2:
-            bot_details = input("{}".format(CREATE_BOT_TEXT))
+            bot_details = input("{} \n".format(CREATE_BOT_TEXT))
             bot_details = list(bot_details.strip().split(","))
             self.create_bot(bot_details[0], bot_details[1], bot_details[2], bot_details[3], bot_details[4])
         else:
-            bot_handle = input("What is the bots handle?")
+            bot_handle = input("What is the bots handle?\n")
             self.set_specified_bot(bot_handle)
         self.create_api()
 
     def run(self):
         self.upload_bot_data()
-        welcome_option = int(input("{}".format(WELCOME_TEXT)))
+        welcome_option = int(input("{}\n".format(WELCOME_TEXT)))
         self.select(welcome_option)
         bot = self.get_mode_from_user()
         bot.start()
