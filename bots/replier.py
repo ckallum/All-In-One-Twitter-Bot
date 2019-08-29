@@ -1,16 +1,16 @@
 import tweepy
 import json
-import logging
 
 SCRIPTED_MSG = "Thanks for messaging KE-BOT, Message courtesy of KE-BOT"
 
 
 class ReplyBot(tweepy.StreamListener):
-    def __init__(self, api):
+    def __init__(self, api, logger):
         super().__init__()
         self.users = {}
         self.tracking = [user["id"] for user in self.users]
-        self.user = api.me()
+        self.me = api.me()
+        self.logger = logger
         self.api = api
 
     def on_connect(self):
@@ -23,5 +23,21 @@ class ReplyBot(tweepy.StreamListener):
             print("Tweeted at {}".format(status.user.id_str))
             self.api.update_status("@{} {}".format(status.user.id_str, SCRIPTED_MSG))
 
-    def create(self):
+    def add_users(self):
+        pass
+
+    def remove_users(self):
+        pass
+
+    def choose(self):
+        with open("messages/option_messages/bot1.txt", "r") as option:
+            choice = input(option.read())
+        if choice == 1:
+            self.add_users()
+        elif choice == 2:
+            self.remove_users()
+        else:
+            pass
+
+    def start(self):
         pass

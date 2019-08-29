@@ -5,14 +5,15 @@ import tweepy
 from bots.follower import FollowBot
 from bots.likeretweeter import LikeRetweetBot
 from bots.replier import ReplyBot
+from bots.tweeter import TweetBot
 
-with open("messages/welcome.txt", "r") as welcome:
+with open("messages/app_messages/welcome.txt", "r") as welcome:
     WELCOME_TEXT = welcome.read() + "\n"
 
-with open("messages/createbot.txt", "r") as create:
+with open("messages/app_messages/createbot.txt", "r") as create:
     CREATE_BOT_TEXT = create.read() + "\n"
 
-with open("messages/createbot.txt", "r") as mode:
+with open("messages/app_messages/mode.txt", "r") as mode:
     MODE_TEXT = mode.read() + "\n"
 
 
@@ -22,8 +23,8 @@ class BotApp(object):
         self.api = None
         self.running = False
         self.bot_data_jsons = {}
+        logging.basicConfig(level=logging.info())
         self.logger = logging.getLogger()
-        self.mode = 0
 
     def upload_bot_data(self):
         with open("json/bots.json", "r") as auth:
@@ -48,7 +49,8 @@ class BotApp(object):
         if handle in self.bot_data_jsons:
             raise Exception("Bot already exists")
         else:
-            self.bot_data_jsons[handle].values = {handle, ck, cs, at, ats}
+            self.bot_data_jsons[handle] = {"handle": handle, "consumer_key": ck, "consumer_secret": cs,
+                                           "access_token": at, "access_token_secret": ats}
             self.set_specified_bot(handle)
             self.export_bot_data()
 
@@ -71,11 +73,13 @@ class BotApp(object):
     def get_mode_from_user(self):
         mode = input(MODE_TEXT)
         if mode == 1:
-            bot = ReplyBot(self.api)
+            bot = ReplyBot(self.api, self.logger)
         elif mode == 2:
-            bot = LikeRetweetBot(self.api)
+            bot = LikeRetweetBot(self.api, self.logger)
+        elif mode == 3:
+            bot = FollowBot(self.api, self.logger)
         else:
-            bot = FollowBot(self.api)
+            bot = TweetBot(self.api, self.logger)
         return bot
 
     def select(self, option):
@@ -95,4 +99,4 @@ class BotApp(object):
         welcome_option = int(input("{}".format(WELCOME_TEXT)))
         self.select(welcome_option)
         bot = self.get_mode_from_user()
-        bot.create()
+        bot.start()
