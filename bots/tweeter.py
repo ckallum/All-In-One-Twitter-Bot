@@ -1,5 +1,3 @@
-import tweepy
-
 from bots.streamlistenerbase import StreamListenerBase
 
 
