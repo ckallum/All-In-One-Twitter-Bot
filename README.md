@@ -8,11 +8,11 @@ using the Tweepy API with the following functionalities:
 4. Tweet from the command line using the bot account.
 
 ----------------------------
-How to Use:
+##How to Use:
  - Make sure you have a [Twitter Dev Account](develepor.twitter.com)
  - Fill in default bot details in 'bots.json' manually or through running 'main.py' and
    adding the details in through the command line.
-   '''
+   ````
      {
         "twitter_handle": "",
         "consumer_key": "",
