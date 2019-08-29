@@ -1,25 +1,22 @@
-import time
-import tweepy
-import json
-import logging
+import tweepy as tweepy
 
 
-class FollowBot(object):
+class StreamListenerBase(tweepy.StreamListener):
     def __init__(self, api, logger):
+        super().__init__()
         self.users = {}
+        self.tracking = [user["id"] for user in self.users]
         self.me = api.me()
         self.api = api
         self.logger = logger
 
-    def follow_users(self):
-        self.logger.info("Following users")
-        for user in self.users:
-            if not user["following"]:
-                self.logger.info("Following {}".format(user["handle"]))
-                user["following"] = True
-                self.api.create_friendship(user["id"])
+    def on_connect(self):
+        if not self.tracking:
+            raise Exception("No users being tracked")
+        else:
+            self.logger.info("Bot connected, tracking {}".format([user["handle"] for user in self.tracking]))
 
-    def unfollow_users(self):
+    def on_status(self, status):
         pass
 
     def add_users(self):
@@ -36,7 +33,10 @@ class FollowBot(object):
         elif choice == 2:
             self.remove_users()
         else:
-            pass
+            self.run_bot()
+
+    def run_bot(self):
+        pass
 
     def start(self):
         pass
