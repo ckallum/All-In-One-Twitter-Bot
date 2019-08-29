@@ -55,7 +55,6 @@ class BotApp(object):
             self.export_bot_data()
 
     def create_api(self):
-        logger = logging.getLogger()
         auth = tweepy.OAuthHandler(self.bot_json["consumer_key"], self.bot_json["consumer_secret"])
         auth.access_token = self.bot_json["access_token"]
 
@@ -64,10 +63,10 @@ class BotApp(object):
         try:
             api.verify_credentials()
         except Exception as e:
-            logger.error("Error creating API")
+            self.logger.error("Error creating API")
             raise e
-        logger.info("API created")
-        logger.info("Current bot: {}".format(self.bot_json["handle"]))
+        self.logger.info("API created")
+        self.logger.info("Current bot: {}".format(self.bot_json["handle"]))
         self.api = api
 
     def get_mode_from_user(self):
