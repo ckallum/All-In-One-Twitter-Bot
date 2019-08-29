@@ -23,6 +23,5 @@ class LikeRetweetBot(StreamListenerBase):
             self.logger.info("Searching tweets")
             time.sleep(60)
 
-
     def start(self):
         pass

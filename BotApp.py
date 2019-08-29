@@ -70,12 +70,12 @@ class BotApp(object):
         self.api = api
 
     def get_mode_from_user(self):
-        mode = input(MODE_TEXT)
-        if mode == 1:
+        state = input(MODE_TEXT)
+        if state == 1:
             bot = ReplyBot(self.api, self.logger)
-        elif mode == 2:
+        elif state == 2:
             bot = LikeRetweetBot(self.api, self.logger)
-        elif mode == 3:
+        elif state == 3:
             bot = FollowBot(self.api, self.logger)
         else:
             bot = TweetBot(self.api, self.logger)

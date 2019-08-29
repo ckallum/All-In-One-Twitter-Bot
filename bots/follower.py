@@ -1,15 +1,12 @@
-import time
 import tweepy
 import json
-import logging
+
+from bots.streamlistenerbase import StreamListenerBase
 
 
-class FollowBot(object):
+class FollowBot(StreamListenerBase):
     def __init__(self, api, logger):
-        self.users = {}
-        self.me = api.me()
-        self.api = api
-        self.logger = logger
+        super().__init__(api, logger)
 
     def follow_users(self):
         self.logger.info("Following users")
@@ -21,22 +18,6 @@ class FollowBot(object):
 
     def unfollow_users(self):
         pass
-
-    def add_users(self):
-        pass
-
-    def remove_users(self):
-        pass
-
-    def choose(self):
-        with open("messages/option_messages/bot2.txt", "r") as option:
-            choice = input(option.read())
-        if choice == 1:
-            self.add_users()
-        elif choice == 2:
-            self.remove_users()
-        else:
-            pass
 
     def start(self):
         pass

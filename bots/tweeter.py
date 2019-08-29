@@ -1,9 +1,9 @@
 import tweepy
 import json
 
-import logging
+from bots.streamlistenerbase import StreamListenerBase
 
 
-class TweetBot(object):
+class TweetBot(StreamListenerBase):
     def __init__(self, api, logger):
-        pass
+        super().__init__(api, logger)
