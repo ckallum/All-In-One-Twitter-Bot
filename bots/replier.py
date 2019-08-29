@@ -8,7 +8,8 @@ SCRIPTED_MSG = "Thanks for messaging KE-BOT, Message courtesy of KE-BOT"
 class ReplyBot(tweepy.StreamListener):
     def __init__(self, api):
         super().__init__()
-        self.tracking = [user["id"] for user in users]
+        self.users = {}
+        self.tracking = [user["id"] for user in self.users]
         self.user = api.me()
         self.api = api
 
