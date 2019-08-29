@@ -105,7 +105,4 @@ venv.bak/
 .mypy_cache/
 
 #extras
-/json/bots.json
-/json/autofollow
-/json/autoreply
-/json/autoretweet
+json/*.json
