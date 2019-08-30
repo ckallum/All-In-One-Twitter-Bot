@@ -10,14 +10,14 @@ class ReplyBot(StreamListenerBase):
         self.json_file = "json/autoreply/users.json"
 
     def on_connect(self):
-        if not self.tracking:
+        if not self.tracking_ids:
             self.logger.info("Tracking and replying to all messages sent to bot.")
         else:
-            self.logger.info("Bot connected, tracking {}".format([user["handle"] for user in self.tracking]))
+            self.logger.info("Bot connected, tracking {}".format([user["handle"] for user in self.users]))
 
     def on_status(self, status):
-        if self.tracking:
-            if status.user.id_str in self.tracking:
+        if self.tracking_ids:
+            if status.user.id_str in self.tracking_ids:
                 if not status.user.following:
                     self.api.create_friendship(status.user.id_str)
                 self.logger.info("Tweeted at tracked user{}".format(status.user.id_str))
@@ -36,8 +36,11 @@ class ReplyBot(StreamListenerBase):
         try:
             while True:
                 stream = tweepy.Stream(self.api.auth, self)
-                stream.filter(track="@"+self.api.get_user(self.me.id), languages=["en"], is_async=True)
+                print(self.me.id, self.api.get_user(self.me.id).screen_name)
+                stream.filter(track="@"+self.api.get_user(self.me.id).screen_name, languages=["en"], is_async=True)
                 self.logger.info("Searching tweets. press CTRL-C to quit")
         except KeyboardInterrupt:
             self.logger.info("Exiting app")
             pass
+
+

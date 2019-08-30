@@ -10,7 +10,7 @@ class FollowBot(StreamListenerBase):
 
     def follow_users(self):
         self.logger.info("Following users")
-        for user in self.tracking:
+        for user in self.tracking_ids:
             if user not in self.api.followers_ids:
                 self.logger.info("Following {}".format(self.api.get_user(user)))
                 self.api.create_friendship(user)
@@ -20,7 +20,7 @@ class FollowBot(StreamListenerBase):
 
     def unfollow_users(self):
         self.logger.info("Following users")
-        for user in self.tracking:
+        for user in self.tracking_ids:
             if user not in self.api.followers_ids:
                 self.logger.info("Already following user {}".format(self.api.get_user(user)))
             else:
@@ -31,7 +31,7 @@ class FollowBot(StreamListenerBase):
     def choose(self):
         choice = int(input("Would you like to follow or unfollow(1/2)\n"))
         users = list(input("Enter the handles").strip(" "))
-        self.tracking = [self.api.get_user(user) for user in users]
+        self.tracking_ids = [user["id"] for user in users]
         if choice == 1:
             self.logger.info("Users added to following list, bot now running")
             self.follow_users()

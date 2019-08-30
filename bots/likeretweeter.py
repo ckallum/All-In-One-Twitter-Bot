@@ -9,7 +9,7 @@ class LikeRetweetBot(StreamListenerBase):
         self.json_file = "json/autoretweet/users.json"
 
     def on_status(self, status):
-        if status.user.id_str in self.tracking:
+        if status.user.id_str in self.tracking_ids:
             status.favorite()
             status.retweet()
             self.logger.info("Re-tweeted and liked tweet from {}: {}".format(status.user.id_str, status.text))
