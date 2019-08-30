@@ -8,10 +8,12 @@ using the Tweepy API with the following functionalities:
 4. Tweet from the command line using the bot account.
 
 ----------------------------
-##How to Use:
+##Setup:
+ - Tweepy package installed and a version of Python 3.+
  - Make sure you have a [Twitter Dev Account](develepor.twitter.com)
- - Fill in default bot details in 'bots.json' manually or through running 'main.py' and
+ - Fill in bot details in 'bots.json' manually or through running 'main.py' and
    adding the details in through the command line.
+   - These are linked to and retrieved through your Twitter Dev Account
    ````
      {
         "twitter_handle": "",
@@ -22,6 +24,12 @@ using the Tweepy API with the following functionalities:
       }
    
    ````
+ - If using the reply-bot, you can change the default SCRIPTED_MSG in replier.py to 
+   whatever message you want. This can also be done in the command line when running the program.
+   
+##How to Run
+- ```python3 main.py```
+- Follow the on-screen instructions.
    
     
    

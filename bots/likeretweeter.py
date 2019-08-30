@@ -6,7 +6,7 @@ from bots.streamlistenerbase import StreamListenerBase
 class LikeRetweetBot(StreamListenerBase):
     def __init__(self, api, logger):
         super().__init__(api, logger)
-        self.json_file = "autoretweet/users.json"
+        self.json_file = "json/autoretweet/users.json"
 
     def on_status(self, status):
         if status.user.id_str in self.tracking:
@@ -17,7 +17,7 @@ class LikeRetweetBot(StreamListenerBase):
     def run_bot(self):
         try:
             while True:
-                stream = tweepy.Stream(self, self.api.auth)
+                stream = tweepy.Stream(self.api.auth, self)
                 stream.filter(track=["@"+user["handle"] for user in self.users], languages=["en"], is_async=True)
                 self.logger.info("Searching tweets. press CTRL-C to quit")
         except KeyboardInterrupt:

@@ -36,7 +36,7 @@ class FollowBot(StreamListenerBase):
             self.logger.info("Users added to following list, bot now running")
             self.follow_users()
         elif choice == 2:
-            self.logger.info("Users added, bot now running")
+            self.logger.info("Users added to unfollow list, bot now running")
             self.unfollow_users()
         else:
             self.logger.info("Input error, please try again")

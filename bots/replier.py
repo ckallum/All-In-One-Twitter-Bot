@@ -7,7 +7,7 @@ SCRIPTED_MSG = "Thanks for messaging KE-BOT, Message courtesy of KE-BOT"
 class ReplyBot(StreamListenerBase):
     def __init__(self, api, logger):
         super().__init__(api, logger)
-        self.json_file = "autoreply/users.json"
+        self.json_file = "json/autoreply/users.json"
 
     def on_connect(self):
         if not self.tracking:
@@ -29,9 +29,13 @@ class ReplyBot(StreamListenerBase):
             self.api.update_status("@{} {}".format(status.user.id_str, SCRIPTED_MSG))
 
     def run_bot(self):
+        global SCRIPTED_MSG
+        msg_choice = input("Would you like to change the scripted message?(Y/N)\n")
+        if msg_choice == 'Y':
+            SCRIPTED_MSG = input("Type your message \n ")
         try:
             while True:
-                stream = tweepy.Stream(self, self.api.auth)
+                stream = tweepy.Stream(self.api.auth, self)
                 stream.filter(track="@"+self.api.get_user(self.me.id), languages=["en"], is_async=True)
                 self.logger.info("Searching tweets. press CTRL-C to quit")
         except KeyboardInterrupt:
