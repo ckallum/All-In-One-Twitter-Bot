@@ -15,4 +15,10 @@ with open("json/bots.json", "r") as bots:
     except:
         print("Authentication Error")
 
+for tweet in tweepy.Cursor(api.user_timeline).items(100):
+    api.destroy_status(tweet.id)
+
+print("DONE")
+
+
 
