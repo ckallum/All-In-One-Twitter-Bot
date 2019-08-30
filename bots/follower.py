@@ -12,19 +12,19 @@ class FollowBot(StreamListenerBase):
         self.logger.info("Following users")
         for user in self.tracking_ids:
             if user not in self.api.followers_ids:
-                self.logger.info("Following {}".format(self.api.get_user(user)))
+                self.logger.info("Following {}".format(self.api.get_user(user).screen_name))
                 self.api.create_friendship(user)
             else:
-                self.logger.info("Already following user {}".format(self.api.get_user(user)))
+                self.logger.info("Already following user {}".format(self.api.get_user(user).screen_name))
                 pass
 
     def unfollow_users(self):
         self.logger.info("Following users")
         for user in self.tracking_ids:
             if user not in self.api.followers_ids:
-                self.logger.info("Already following user {}".format(self.api.get_user(user)))
+                self.logger.info("Already following user {}".format(self.api.get_user(user).screen_name))
             else:
-                self.logger.info("Unfollowing {}".format(self.api.get_user(user)))
+                self.logger.info("Unfollowing {}".format(self.api.get_user(user).screen_name))
                 self.api.destroy_friendship(user["id"])
                 pass
 

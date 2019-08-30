@@ -20,13 +20,13 @@ class ReplyBot(StreamListenerBase):
             if status.user.id_str in self.tracking_ids:
                 if not status.user.following:
                     self.api.create_friendship(status.user.id_str)
-                self.logger.info("Tweeted at tracked user{}".format(status.user.id_str))
-                self.api.update_status("@{} {}".format(status.user.id_str, SCRIPTED_MSG))
+                self.logger.info("Tweeted at tracked user{}".format(status.user.screen_name))
+                self.api.update_status("@{} {}".format(status.user.screen_name, SCRIPTED_MSG))
         else:
             if not status.user.following:
                 self.api.create_friendship(status.user.id_str)
-            self.logger.info("Tweeted at non-tracked user{}".format(status.user.id_str))
-            self.api.update_status("@{} {}".format(status.user.id_str, SCRIPTED_MSG))
+            self.logger.info("Tweeted at non-tracked user{}".format(status.user.screen_name))
+            self.api.update_status("@{} {}".format(status.user.screen_name, SCRIPTED_MSG))
 
     def run_bot(self):
         global SCRIPTED_MSG
@@ -36,8 +36,7 @@ class ReplyBot(StreamListenerBase):
         try:
             while True:
                 stream = tweepy.Stream(self.api.auth, self)
-                print(self.me.id, self.api.get_user(self.me.id).screen_name)
-                stream.filter(track="@"+self.api.get_user(self.me.id).screen_name, languages=["en"], is_async=True)
+                stream.filter(track="@{}".format(self.api.get_user(self.me.id).screen_name), languages=["en"], is_async=True)
                 self.logger.info("Searching tweets. press CTRL-C to quit")
         except KeyboardInterrupt:
             self.logger.info("Exiting app")

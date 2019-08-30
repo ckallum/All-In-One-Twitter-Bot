@@ -18,7 +18,7 @@ class LikeRetweetBot(StreamListenerBase):
         try:
             while True:
                 stream = tweepy.Stream(self.api.auth, self)
-                stream.filter(track=["@"+user["handle"] for user in self.users], languages=["en"], is_async=True)
+                stream.filter(track=["@{}".format(user["handle"]) for user in self.users], languages=["en"], is_async=True)
                 self.logger.info("Searching tweets. press CTRL-C to quit")
         except KeyboardInterrupt:
             self.logger.info("Exiting app")
