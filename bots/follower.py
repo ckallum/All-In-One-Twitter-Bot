@@ -30,8 +30,8 @@ class FollowBot(StreamListenerBase):
 
     def choose(self):
         choice = int(input("Would you like to follow or unfollow(1/2)\n"))
-        users = list(input("Enter the handles").strip(" "))
-        self.tracking_ids = [user["id"] for user in users]
+        users = list(input("Enter the handles \n").strip(" "))
+        self.tracking_ids = [self.api.get_user(user).id for user in users]
         if choice == 1:
             self.logger.info("Users added to following list, bot now running")
             self.follow_users()
@@ -44,7 +44,3 @@ class FollowBot(StreamListenerBase):
 
     def start(self):
         self.choose()
-
-
-
-
